@@ -3,6 +3,19 @@
 " really comment very well probably because I didn't (and still don't) really
 " understand what the hell I'm doing.
 
+" This is Vundle stuff and is probably wrong.
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+" others here
+call vundle#end()
+filetype plugin indent on
+" End of Vundle gibberish
+
 " General Options {{{
 " Fed up of backup and swap files polluting the place and getting orphaned
 set nobackup
@@ -37,10 +50,10 @@ let mapleader=','
 " Plugin stuff {{{
 "execute pathogen#infect()
 
-"map \ <Plug>(easymotion-prefix)
-"map / <Plug>(easymotion-sn)
-"map n <Plug>(easymotion-next)
-"map N <Plug>(easymotion-prev)
+map \ <Plug>(easymotion-prefix)
+map / <Plug>(easymotion-sn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
 
 source $VIMRUNTIME/macros/matchit.vim
 "}}}
