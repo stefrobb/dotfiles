@@ -19,7 +19,7 @@ set ruler
 set laststatus=2
 set number
 set t_Co=256
-colorscheme desert256
+"colorscheme desert256
 set ignorecase
 " Set font
 "set gfn=Source_Code_Pro:h10:cANSI
@@ -28,53 +28,25 @@ set smartcase
 set autochdir
 " Turn off bell, this could be more annoying, but I'm not sure how
 set vb t_vb=
-" No GUI toolbar
-set guioptions-=T
-" No GUI menu bar
-set guioptions-=m
 " Don't break words when we wrap lines
 set linebreak 
-"}}}
-" Includes {{{
-source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
 "}}}
 
 let mapleader=','
 
 " Plugin stuff {{{
-execute pathogen#infect()
+"execute pathogen#infect()
 
-" Shortcut to rapidly toggle `set list`
-nnoremap <leader>l :set list!<CR>
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:¸\ ,eol:A
-
-map \ <Plug>(easymotion-prefix)
-map / <Plug>(easymotion-sn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
+"map \ <Plug>(easymotion-prefix)
+"map / <Plug>(easymotion-sn)
+"map n <Plug>(easymotion-next)
+"map N <Plug>(easymotion-prev)
 
 source $VIMRUNTIME/macros/matchit.vim
 "}}}
 
 syntax enable
 filetype plugin indent on
-
-" Set window size
-if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window.
-  set lines=45 columns=120
-else
-  " This is console Vim.
-  if exists("+lines")
-    set lines=50
-  endif
-  if exists("+columns")
-    set columns=100
-  endif
-end
 
 " Vimscript file settings -- -- -- -- {{{
 augroup filetype_vim
@@ -147,11 +119,8 @@ nnoremap Q :q<cr>
 "}}}
 
 "Powerline configuration
-set encoding=utf-8
-set laststatus=2
-set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
-set t_Co=256
-let g:Powerline_symbols = "fancy"
-"anti menu garbled
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
+"set encoding=utf-8
+"set laststatus=2
+"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+"set t_Co=256
+"let g:Powerline_symbols = "fancy"
