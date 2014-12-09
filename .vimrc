@@ -10,8 +10,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-scripts/CycleColor'
+Plugin 'justinmk/vim-sneak'
+Plugin 'ap/vim-buftabline'
 " others here
 call vundle#end()
 filetype plugin indent on
@@ -49,18 +51,15 @@ set linebreak
 let mapleader=','
 
 " Plugin stuff {{{
-"execute pathogen#infect()
 
 map \ <Plug>(easymotion-prefix)
 map / <Plug>(easymotion-sn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
-source $VIMRUNTIME/macros/matchit.vim
 "}}}
 
 syntax enable
-filetype plugin indent on
 
 " Vimscript file settings -- -- -- -- {{{
 augroup filetype_vim
@@ -103,7 +102,7 @@ noremap - :NERDTree<cr>
 "map <c-j> j<c-e>
 "map <c-k> k<c-y>
 " c-v pastes to the *right* of the cursor pos, remain in normal mode
-map <c-v> a<c-v><esc>
+"map <c-v> a<c-v><esc>
 
 " Fancy search and replace set up: works in visual mode with selected text,
 " expanded properly. Obv. you have to " complete the rest of the s///g command yourself.
@@ -131,10 +130,3 @@ nnoremap <leader>N :setlocal number!<cr>
 " Q = :q, quicker quit?  Not sure really. .. 
 nnoremap Q :q<cr>
 "}}}
-
-"Powerline configuration
-"set encoding=utf-8
-"set laststatus=2
-"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
-"set t_Co=256
-"let g:Powerline_symbols = "fancy"
