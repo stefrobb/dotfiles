@@ -19,7 +19,7 @@ set ruler
 set laststatus=2
 set number
 set t_Co=256
-"colorscheme desert256
+colorscheme slate
 set ignorecase
 " Set font
 "set gfn=Source_Code_Pro:h10:cANSI
