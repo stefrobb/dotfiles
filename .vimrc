@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
+Plugin 'vim-scripts/CycleColor'
 " others here
 call vundle#end()
 filetype plugin indent on
