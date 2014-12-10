@@ -52,11 +52,16 @@ set ruler
 set laststatus=2
 set number
 set t_Co=256
-colorscheme base16-atelierdune
-"colorscheme desert
+if has("win32")
+	colorscheme base16-atelierdune
+else
+	colorscheme desert
+endif
 set ignorecase
 " Set font
-set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+if has("win32")
+	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+endif
 set smartcase
 " Auto change dir to current buffer
 set autochdir
@@ -97,19 +102,21 @@ map N <Plug>(easymotion-prev)
 syntax enable
 
 " Set window size
-if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window.
-  set lines=54 columns=120
-else
-  " This is console Vim.
-  if exists("+lines")
-    set lines=50
-  endif
-  if exists("+columns")
-    set columns=100
-  endif
-end
+if has("win32")
+	if has("gui_running")
+	  " GUI is running or is about to start.
+	  " Maximize gvim window.
+	  set lines=54 columns=120
+	else
+	  " This is console Vim.
+	  if exists("+lines")
+		set lines=50
+	  endif
+	  if exists("+columns")
+		set columns=100
+	  endif
+	endif
+endif
 
 " Vimscript file settings -- -- -- -- {{{
 augroup filetype_vim
