@@ -3,7 +3,10 @@
 " really comment very well probably because I didn't (and still don't) really
 " understand what the hell I'm doing.
 
-" This is Vundle stuff and is probably wrong.
+" I don't know why I bother with all this, I never actually use Vim for
+" anything.  I suppose it's just something to do.
+
+" Vundle {{{
 set nocompatible
 filetype off
 if has("unix")
@@ -30,82 +33,54 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'wting/rust.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-entire'
+Plugin 'kien/ctrlp.vim'
+Plugin 'roman/golden-ratio'
+Plugin 'MattesGroeger/vim-bookmarks'
 " No more plugins after here
 call vundle#end()
 filetype plugin indent on
-" End of Vundle gibberish
+" }}}
 
 " General Options {{{
-" Fed up of backup and swap files polluting the place and getting orphaned
-set nobackup
-set noswapfile
-" Allow you to have multiple files open and change between them without saving
-set hidden
-set nocompatible
-set autoindent
-set smartindent
+set nobackup		" no backup files (doesn't seem to work sometimes)
+set noswapfile		" no swap files (don't even see the point of these)
+set hidden			" allow switching buffers without saving changes first
+set nocompatible	" don't be vi
+set autoindent		" what is says
+set smartindent		" more indent-y stuff
 set tabstop=4
 set shiftwidth=4
-" Allow mouse:
-behave mswin
-set ruler
-set laststatus=2
-set number
-set t_Co=256
+behave mswin		" allow mouse
+set ruler			" show cursor position
+set laststatus=2	" always have a status line
+set number			" line numbers on by default
+set t_Co=256		" moar colours
+" Select colour scheme depending on OS
 if has("win32")
-	colorscheme base16-atelierdune
+	colorscheme darkblack
 else
 	colorscheme desert
 endif
-set ignorecase
-" Set font
+set ignorecase		" um, ignore case
+set smartcase		" override ignorecase if the search pattern contains upper case
+" Set font, depending on OS
 if has("win32")
 	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 endif
-set smartcase
-" Auto change dir to current buffer
-set autochdir
-" Turn off bell, this could be more annoying, but I'm not sure how
-set vb t_vb=
-" No GUI toolbar
-set guioptions-=T
-" No GUI menu bar
-set guioptions-=m
-" Don't break words when we wrap lines
-set linebreak 
-"}}}
-" Includes {{{
-source $VIMRUNTIME/vimrc_example.vim
-" Remap cut, copy and paste to Windows keys.
-"source $VIMRUNTIME/mswin.vim  " No thanks
-" c-v pastes to the *right* of the cursor pos, remain in normal mode
-"map <c-v> a<c-v><esc>
-"}}}
+set autochdir		" change cwd to that of file/buffer being edited
+set vb t_vb=		" no bell
+set guioptions-=T	" no gui toolbar
+set guioptions-=m	" no gui menubar
+set linebreak 		" word-wrap on
 
-let mapleader=','
+syntax enable " enable syntax highlighting
+syntax on
 
-" Plugin stuff {{{
-
-" Shortcut to rapidly toggle `set list`
-nnoremap <leader>l :set list!<CR>
-" Use the same symbols as TextMate for tabstops and EOLs
-"set listchars=tab:¸\ ,eol:A
-
-map \ <Plug>(easymotion-prefix)
-map / <Plug>(easymotion-sn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
-
-"source $VIMRUNTIME/macros/matchit.vim
-"}}}
-
-syntax enable
-
-" Set window size
+" Set window size, Windows only
 if has("win32")
 	if has("gui_running")
 	  " GUI is running or is about to start.
-	  " Maximize gvim window.
+	  " Set the size of the gvim window.
 	  set lines=54 columns=120
 	else
 	  " This is console Vim.
@@ -117,8 +92,9 @@ if has("win32")
 	  endif
 	endif
 endif
+"}}}
 
-" Vimscript file settings -- -- -- -- {{{
+" Filetype autocmd stuff {{{
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
@@ -126,15 +102,38 @@ augroup filetype_vim
 augroup END
 " }}}
 
+" Includes {{{
+source $VIMRUNTIME/vimrc_example.vim
+" Remap cut, copy and paste to Windows keys.
+"source $VIMRUNTIME/mswin.vim  " No thanks
+" c-v pastes to the *right* of the cursor pos, remain in normal mode
+"map <c-v> a<c-v><esc>
+"}}}
+
 " Mappings {{{
+let mapleader=','
+
+" Shortcut to rapidly toggle `set list`
+nnoremap <leader>l :set list!<CR>
+
+" Easymotion mappings:
+map \ <Plug>(easymotion-prefix)
+map / <Plug>(easymotion-sn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+
 " Map window switching keys
+" These ones maximise the window after switching:
 "nnoremap <C-H> <C-W>h<C-W>_
-nnoremap <C-J> <C-W>j<C-W>_
-nnoremap <C-K> <C-W>k<C-W>_
+"nnoremap <C-J> <C-W>j<C-W>_
+"nnoremap <C-K> <C-W>k<C-W>_
 "nnoremap <C-L> <C-W>l<C-W>_
+" These ones do not change the window size when switching:
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
 " <C-M> maximises current window
 nnoremap <C-M> <C-W>_
-set wmh=0
+set wmh=0 " allow minimum height windows (status line only)
 
 " Remappings of some of the above keys, these ones allow us to move between
 " buffers rather than windows since I started using the buftabline plugin
@@ -144,19 +143,22 @@ nnoremap <C-H> :bp<CR>
 
 " Quick edit of _vimrc
 nnoremap <leader>v :edit $MYVIMRC<CR>
+" Quick source of _vimrc
 nnoremap <leader>sv :so $MYVIMRC<cr>
+" Quick save and source of _vimrc
+cnoremap ww :w %<cr>:so %<cr>
+
 " Clear search highlighting shortcut:
-nnoremap <leader>c :nohlsearch<CR>
+"nnoremap <leader>c :nohlsearch<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
 "nnoremap <cr> :noh<cr>
-
-" let's autoload this file whenever we save it
-cnoremap ww :w %<cr>:so %<cr>
+" Or...
+map <C-H> :nohl<CR>
 
 " Map - (minus) to open the current folder in netrw (or NERDTree)
 noremap - :NERDTree<cr>
 
-" map c-j/k to scroll the window around the cursor
+" Map c-j/k to scroll the window around the cursor
 "map <c-j> j<c-e>
 "map <c-k> k<c-y>
 
@@ -164,18 +166,19 @@ noremap - :NERDTree<cr>
 " expanded properly. Obv. you have to complete the rest of the s///g command yourself.
 vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 
-" map jk to <esc> only in insert mode
+" Map jk to <esc> only in insert mode
 inoremap jk <esc>
-" pagedown with space
+
+" Pagedown with space
 nnoremap <Space> <PageDown>
-" pageup with shift space?  Why not!
+" Pageup with shift space?  Why not!
 nnoremap <S-Space> <PageUp>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" insert new line above without going into insert mode
+" Insert new line above without going into insert mode
 nnoremap <S-Enter> O<ESC>
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
@@ -184,14 +187,25 @@ nnoremap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
 " Toggle linenumbers with leader-N
 nnoremap <leader>N :setlocal number!<cr>
 
-" Q = :q, quicker quit?  Not sure really. .. 
+" Q = :q, quicker quit?  Not sure really...
 nnoremap Q :q<cr>
+
+" <C-T> will move the cursor to the middle of the screen
+" and then make the window scroll that line to the top
+" of the screen
+nmap <C-T> Mz<CR>
+
+" CtrlP mappings, I'm not even sure what this plugin is for...
+let g:ctrlp_map = '<C-P>'
+
+" vim-bookmarks settings
+let g:bookmark_sign='> '
+let g:bookmark_annotation_sign = '>#'
 "}}}
 
 " lightline configuration {{{
 set encoding=utf-8
 scriptencoding utf-8
-set laststatus=2
 let g:lightline = {
       \ 'component': {
       \   'readonly': '%{&readonly?"\u2b64":""}',
