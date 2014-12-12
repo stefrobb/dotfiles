@@ -57,9 +57,9 @@ set number			" line numbers on by default
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if has("win32")
-	colorscheme darkblack
+	colorscheme ubloh
 else
-	colorscheme desert
+	colorscheme ubloh
 endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
