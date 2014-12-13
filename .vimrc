@@ -151,7 +151,7 @@ nnoremap <leader>v :edit $MYVIMRC<CR>
 " Quick source of _vimrc
 nnoremap <leader>sv :so $MYVIMRC<cr>
 " Quick save and source of _vimrc
-cnoremap ww :w %<cr>:so %<cr>
+cmap ww w %<cr>:so %<cr>
 
 " Clear search highlighting shortcut:
 nnoremap <leader>c :nohlsearch<CR>
@@ -228,6 +228,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " vim-session configuation {{{
 let g:session_autosave='no'
 let g:session_autoload='no'
-cnoremap ss :SaveSession<cr>
-cnoremap os :OpenSession<cr>
+"cnoremap ss SaveSession<cr>
+"cnoremap os OpenSession<cr>
 " }}}
