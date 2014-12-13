@@ -240,6 +240,6 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 " vim-session configuation {{{
 let g:session_autosave='no'
 let g:session_autoload='no'
-"cnoremap ss SaveSession<cr>
-"cnoremap os OpenSession<cr>
+nnoremap <leader>os :OpenSession<cr>
+nnoremap <leader>ss :SaveSession<cr>
 " }}}
