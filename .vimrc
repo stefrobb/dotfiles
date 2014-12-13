@@ -26,9 +26,10 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Lokaltog/vim-easymotion'
 "Plugin 'vim-scripts/CycleColor'
 Plugin 'justinmk/vim-sneak'
-Plugin 'ap/vim-buftabline'
+"Plugin 'ap/vim-buftabline'
 Plugin 'scrooloose/nerdtree'
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
+Plugin 'bling/vim-airline'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'wting/rust.vim'
 Plugin 'kana/vim-textobj-user'
@@ -36,6 +37,8 @@ Plugin 'kana/vim-textobj-entire'
 Plugin 'kien/ctrlp.vim'
 Plugin 'roman/golden-ratio'
 Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
 " No more plugins after here
 call vundle#end()
 filetype plugin indent on
@@ -59,12 +62,14 @@ set t_Co=256		" moar colours
 if has("win32")
 	colorscheme ubloh
 else
-	colorscheme ubloh
+	colorscheme vibrantink
 endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
 " Set font, depending on OS
 if has("win32")
+	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+else
 	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 endif
 set autochdir		" change cwd to that of file/buffer being edited
@@ -149,11 +154,9 @@ nnoremap <leader>sv :so $MYVIMRC<cr>
 cnoremap ww :w %<cr>:so %<cr>
 
 " Clear search highlighting shortcut:
-"nnoremap <leader>c :nohlsearch<CR>
+nnoremap <leader>c :nohlsearch<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
 "nnoremap <cr> :noh<cr>
-" Or...
-map <C-H> :nohl<CR>
 
 " Map - (minus) to open the current folder in netrw (or NERDTree)
 noremap - :NERDTree<cr>
@@ -203,14 +206,28 @@ let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
 "}}}
 
-" lightline configuration {{{
-set encoding=utf-8
-scriptencoding utf-8
-let g:lightline = {
-      \ 'component': {
-      \   'readonly': '%{&readonly?"\u2b64":""}',
-      \ },
-      \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
-      \ }
-"}}}
+"" lightline configuration {{{
+"set encoding=utf-8
+"scriptencoding utf-8
+"let g:lightline = {
+      "\ 'component': {
+      "\   'readonly': '%{&readonly?"\u2b64":""}',
+      "\ },
+      "\ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
+      "\ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
+      "\ }
+""}}}
+
+" vim-airline configuration {{{
+let g:airline_power_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" }}}
+
+" vim-session configuation {{{
+let g:session_autosave='no'
+let g:session_autoload='no'
+cnoremap ss :SaveSession<cr>
+cnoremap os :OpenSession<cr>
+" }}}
