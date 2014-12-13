@@ -39,6 +39,8 @@ Plugin 'roman/golden-ratio'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
+Plugin 'miyakogi/conoline.vim'
+Plugin 'sjl/gundo.vim'
 " No more plugins after here
 call vundle#end()
 filetype plugin indent on
@@ -102,7 +104,7 @@ endif
 " Filetype autocmd stuff {{{
 augroup filetype_vim
     autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
+    "autocmd FileType vim setlocal foldmethod=marker
 	autocmd FileType ruby compiler ruby
 augroup END
 " }}}
@@ -204,6 +206,9 @@ let g:ctrlp_map = '<C-P>'
 " vim-bookmarks settings
 let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
+
+" gundo mappings
+nnoremap <leader>gu :GundoToggle<cr>
 "}}}
 
 "" lightline configuration {{{
@@ -219,10 +224,17 @@ let g:bookmark_annotation_sign = '>#'
 ""}}}
 
 " vim-airline configuration {{{
-let g:airline_power_fonts = 1
+let g:airline_powerline_fonts = 1
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  "let g:airline_symbols.branch = ''
+  "let g:airline_symbols.readonly = ''
+  "let g:airline_symbols.linenr = ''
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
 " }}}
 
 " vim-session configuation {{{
