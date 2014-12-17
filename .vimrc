@@ -1,11 +1,3 @@
-" My vimrc file.  It's a mess, it'll always be a mess.  Good luck even
-" understanding what the various incantations are supposed to do.  I didn't
-" really comment very well probably because I didn't (and still don't) really
-" understand what the hell I'm doing.
-
-" I don't know why I bother with all this, I never actually use Vim for
-" anything.  I suppose it's just something to do.
-
 " Vundle {{{
 set nocompatible
 filetype off
@@ -22,13 +14,9 @@ if has("win32")
 endif
 " Common
 Plugin 'gmarik/Vundle.vim'
-"Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'vim-scripts/CycleColor'
 Plugin 'justinmk/vim-sneak'
-"Plugin 'ap/vim-buftabline'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'itchyny/lightline.vim'
 Plugin 'bling/vim-airline'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'wting/rust.vim'
@@ -41,6 +29,7 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'miyakogi/conoline.vim'
 Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-unimpaired'
 " No more plugins after here
 call vundle#end()
 filetype plugin indent on
@@ -53,6 +42,7 @@ set hidden			" allow switching buffers without saving changes first
 set nocompatible	" don't be vi
 set autoindent		" what is says
 set smartindent		" more indent-y stuff
+set clipboard=unnamed " don't force me to use "* to yank and paste the system clipboard
 set tabstop=4
 set shiftwidth=4
 behave mswin		" allow mouse
@@ -62,7 +52,7 @@ set number			" line numbers on by default
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if has("win32")
-	colorscheme ubloh
+	colorscheme native
 else
 	colorscheme vibrantink
 endif
@@ -70,15 +60,16 @@ set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
 " Set font, depending on OS
 if has("win32")
-	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
-else
-	set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+	set guifont=Sauce_Code_Powerline:h9:cANSI
+"else
+	"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 endif
 set autochdir		" change cwd to that of file/buffer being edited
 set vb t_vb=		" no bell
 set guioptions-=T	" no gui toolbar
 set guioptions-=m	" no gui menubar
 set linebreak 		" word-wrap on
+set scrolloff=5		" scroll when we get close to the top/bottom
 
 syntax enable " enable syntax highlighting
 syntax on
@@ -104,7 +95,7 @@ endif
 " Filetype autocmd stuff {{{
 augroup filetype_vim
     autocmd!
-    "autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldmethod=marker
 	autocmd FileType ruby compiler ruby
 augroup END
 " }}}
@@ -121,7 +112,8 @@ source $VIMRUNTIME/vimrc_example.vim
 let mapleader=','
 
 " Shortcut to rapidly toggle `set list`
-nnoremap <leader>l :set list!<CR>
+nmap <leader>l :set list!<CR>
+set listchars=tab:¸\ ,eol:¬
 
 " Easymotion mappings:
 map \ <Plug>(easymotion-prefix)
@@ -177,7 +169,7 @@ inoremap jk <esc>
 " Pagedown with space
 nnoremap <Space> <PageDown>
 " Pageup with shift space?  Why not!
-nnoremap <S-Space> <PageUp>
+nnoremap <S-Space> <PageUp>  " doesn't work in terminal mode, ok in gvim
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
@@ -193,7 +185,7 @@ nnoremap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
 nnoremap <leader>N :setlocal number!<cr>
 
 " Q = :q, quicker quit?  Not sure really...
-nnoremap Q :q<cr>
+nnoremap Q :qa<cr>
 
 " <C-T> will move the cursor to the middle of the screen
 " and then make the window scroll that line to the top
@@ -206,35 +198,22 @@ let g:ctrlp_map = '<C-P>'
 " vim-bookmarks settings
 let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
-
+highlight SignColumn guibg=Black
+highlight SignColumn ctermbg=0
 " gundo mappings
 nnoremap <leader>gu :GundoToggle<cr>
 "}}}
 
-"" lightline configuration {{{
-"set encoding=utf-8
-"scriptencoding utf-8
-"let g:lightline = {
-      "\ 'component': {
-      "\   'readonly': '%{&readonly?"\u2b64":""}',
-      "\ },
-      "\ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-      "\ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
-      "\ }
-""}}}
-
 " vim-airline configuration {{{
-let g:airline_powerline_fonts = 1
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  "let g:airline_symbols.branch = ''
-  "let g:airline_symbols.readonly = ''
-  "let g:airline_symbols.linenr = ''
+" Fed up trying to sort out fonts, let's just do away with the arrows.
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
 " }}}
 
 " vim-session configuation {{{
