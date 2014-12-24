@@ -18,7 +18,6 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'justinmk/vim-sneak'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'wting/rust.vim'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-entire'
@@ -30,6 +29,9 @@ Plugin 'xolox/vim-session'
 Plugin 'miyakogi/conoline.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-rsi'
+" Colourschemes
+Plugin 'flazz/vim-colorschemes'
 " No more plugins after here
 call vundle#end()
 filetype plugin indent on
@@ -45,6 +47,7 @@ set smartindent		" more indent-y stuff
 set clipboard=unnamed " don't force me to use "* to yank and paste the system clipboard
 set tabstop=4
 set shiftwidth=4
+set backspace=indent,eol,start
 behave mswin		" allow mouse
 set ruler			" show cursor position
 set laststatus=2	" always have a status line
@@ -52,7 +55,7 @@ set number			" line numbers on by default
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if has("win32")
-	colorscheme native
+	colorscheme vibrantink
 else
 	colorscheme vibrantink
 endif
@@ -147,6 +150,9 @@ nnoremap <leader>sv :so $MYVIMRC<cr>
 " Quick save and source of _vimrc
 cmap ww w %<cr>:so %<cr>
 
+" Make %% expand to the path of the active buffer, only in command mode
+cnoremap <expr> %%  getcmdtype()==':' ? expand('%:h').'/' : '%%'
+
 " Clear search highlighting shortcut:
 nnoremap <leader>c :nohlsearch<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
@@ -166,10 +172,14 @@ vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 " Map jk to <esc> only in insert mode
 inoremap jk <esc>
 
+" Map j/k to work within lines which span screen lines.
+nnoremap j gj
+nnoremap k gk
+
 " Pagedown with space
 nnoremap <Space> <PageDown>
 " Pageup with shift space?  Why not!
-nnoremap <S-Space> <PageUp>  " doesn't work in terminal mode, ok in gvim
+nnoremap <S-Space> <PageUp>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
