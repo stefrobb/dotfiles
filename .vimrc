@@ -30,6 +30,8 @@ Plugin 'miyakogi/conoline.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-rsi'
+Plugin 'dahu/vim-lotr'
+Plugin 'tommcdo/vim-exchange'
 " Colourschemes
 Plugin 'flazz/vim-colorschemes'
 " No more plugins after here
@@ -172,9 +174,13 @@ vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 " Map jk to <esc> only in insert mode
 inoremap jk <esc>
 
-" Map j/k to work within lines which span screen lines.
-nnoremap j gj
-nnoremap k gk
+" Make it so that using long, wrapped lines will behave like normal lines
+noremap <buffer> <silent> k gk
+noremap <buffer> <silent> j gj
+noremap <buffer> <silent> 0 g0
+noremap <buffer> <silent> $ g$
+noremap <buffer> <silent> ^ g^
+noremap <buffer> <silent> _ g_
 
 " Pagedown with space
 nnoremap <Space> <PageDown>
