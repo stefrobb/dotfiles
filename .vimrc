@@ -32,6 +32,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-rsi'
 Plugin 'dahu/vim-lotr'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'kurkale6ka/vim-pairs'
+Plugin 'EinfachToll/DidYouMean'
 " Colourschemes
 Plugin 'flazz/vim-colorschemes'
 " No more plugins after here
