@@ -1,44 +1,72 @@
-" Vundle {{{
-set nocompatible
-filetype off
-if has("unix")
-	" Unix
-	set rtp+=~/.vim/bundle/Vundle.vim
-	call vundle#begin()
-endif
-if has("win32")
-	" Windows
-	set rtp+=~/vimfiles/bundle/Vundle.vim/
-	let path='~/vimfiles/bundle'
-	call vundle#begin(path)
-endif
-" Common
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'justinmk/vim-sneak'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'wting/rust.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-entire'
-Plugin 'kien/ctrlp.vim'
-Plugin 'roman/golden-ratio'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'miyakogi/conoline.vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-rsi'
-Plugin 'dahu/vim-lotr'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'kurkale6ka/vim-pairs'
-Plugin 'EinfachToll/DidYouMean'
+" Switched to vim-plug from Vundle.  Very simple install and set up so far.
+" vim-plug {{{
+call plug#begin('~/vimfiles/plugged')
+Plug 'Lokaltog/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+Plug 'scrooloose/nerdtree'
+Plug 'bling/vim-airline'
+Plug 'wting/rust.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'kien/ctrlp.vim'
+Plug 'roman/golden-ratio'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'miyakogi/conoline.vim'
+Plug 'sjl/gundo.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-rsi'
+Plug 'dahu/vim-lotr'
+Plug 'tommcdo/vim-exchange'
+Plug 'kurkale6ka/vim-pairs'
+Plug 'EinfachToll/DidYouMean'
 " Colourschemes
-Plugin 'flazz/vim-colorschemes'
-" No more plugins after here
-call vundle#end()
-filetype plugin indent on
+Plug 'flazz/vim-colorschemes'
+call plug#end()
+" }}}
+
+" Vundle {{{
+"set nocompatible
+"filetype off
+"if has("unix")
+"	" Unix
+"	set rtp+=~/.vim/bundle/Vundle.vim
+"	call vundle#begin()
+"endif
+"if has("win32")
+"	" Windows
+"	set rtp+=~/vimfiles/bundle/Vundle.vim/
+"	let path='~/vimfiles/bundle'
+"	call vundle#begin(path)
+"endif
+"" Common
+"Plugin 'gmarik/Vundle.vim'
+"Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'justinmk/vim-sneak'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'bling/vim-airline'
+"Plugin 'wting/rust.vim'
+"Plugin 'kana/vim-textobj-user'
+"Plugin 'kana/vim-textobj-entire'
+"Plugin 'kien/ctrlp.vim'
+"Plugin 'roman/golden-ratio'
+"Plugin 'MattesGroeger/vim-bookmarks'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-session'
+"Plugin 'miyakogi/conoline.vim'
+"Plugin 'sjl/gundo.vim'
+"Plugin 'tpope/vim-unimpaired'
+"Plugin 'tpope/vim-rsi'
+"Plugin 'dahu/vim-lotr'
+"Plugin 'tommcdo/vim-exchange'
+"Plugin 'kurkale6ka/vim-pairs'
+"Plugin 'EinfachToll/DidYouMean'
+"" Colourschemes
+"Plugin 'flazz/vim-colorschemes'
+"" No more plugins after here
+"call vundle#end()
+"filetype plugin indent on
 " }}}
 
 " General Options {{{
