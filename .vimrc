@@ -34,7 +34,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
 Plug 'wting/rust.vim'
 "Plug 'kana/vim-textobj-user'
-"Plug 'kana/vim-textobj-entire'
+"Plug 'kana/vim-textobj-entire'  " replace with a mapping: vae
 Plug 'kien/ctrlp.vim'
 Plug 'roman/golden-ratio'
 Plug 'MattesGroeger/vim-bookmarks'
@@ -243,7 +243,7 @@ nnoremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb nowrap nofen<CR
 nnoremap gs :%s//g<Left><Left>
 
 " visually select all
-nnoremap vaa ggVG
+nnoremap vae ggVG
 "}}}
 
 " CtrlP mappings, I'm not even sure what this plugin is for... {{{
