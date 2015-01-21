@@ -1,13 +1,40 @@
-" Switched to vim-plug from Vundle.  Very simple install and set up so far.
-" vim-plug {{{
+" use Vim settings over Vi settings
+set nocompatible
+" enables filetype detection, ftplugins, and indent files 
+filetype plugin indent on
+
+
+" Windows/Linux differences
+let s:running_windows = has("win16") || has("win32") || has("win64")
+let g:myvimdir ="~/.vim" " default to .vim
+if s:running_windows
+  let g:myvimdir ="~/vimfiles" " Windoze uses vimfiles
+endif
+
+" Install Vim-Plug if it isn't installed
+" (requires curl and git)
+if !filereadable(expand(g:myvimdir . "/autoload/plug.vim"))
+  echo "Installing Vim-Plug and plugins. Restart after it's done."
+  silent call mkdir(expand(g:myvimdir . "/autoload", 1), 'p')
+  if s:running_windows
+    silent! execute "!curl -kfLo ".expand($USERPROFILE . "\\vimfiles\\autoload\\plug.vim", 1)
+          \ ." https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  else
+    silent! execute "!curl -fLo ".expand(g:myvimdir . "/autoload/plug.vim", 1)
+          \ ." https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  endif
+  autocmd VimEnter * PlugInstall
+endif 
+
+" vim-plug plugins {{{
 call plug#begin()
 Plug 'Lokaltog/vim-easymotion'
 Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
 Plug 'wting/rust.vim'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-entire'
+"Plug 'kana/vim-textobj-user'
+"Plug 'kana/vim-textobj-entire'
 Plug 'kien/ctrlp.vim'
 Plug 'roman/golden-ratio'
 Plug 'MattesGroeger/vim-bookmarks'
@@ -25,49 +52,6 @@ Plug 'mhinz/vim-Startify'
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
-" }}}
-
-" Vundle {{{
-"set nocompatible
-"filetype off
-"if has("unix")
-"	" Unix
-"	set rtp+=~/.vim/bundle/Vundle.vim
-"	call vundle#begin()
-"endif
-"if has("win32")
-"	" Windows
-"	set rtp+=~/vimfiles/bundle/Vundle.vim/
-"	let path='~/vimfiles/bundle'
-"	call vundle#begin(path)
-"endif
-"" Common
-"Plugin 'gmarik/Vundle.vim'
-"Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'justinmk/vim-sneak'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'bling/vim-airline'
-"Plugin 'wting/rust.vim'
-"Plugin 'kana/vim-textobj-user'
-"Plugin 'kana/vim-textobj-entire'
-"Plugin 'kien/ctrlp.vim'
-"Plugin 'roman/golden-ratio'
-"Plugin 'MattesGroeger/vim-bookmarks'
-"Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-session'
-"Plugin 'miyakogi/conoline.vim'
-"Plugin 'sjl/gundo.vim'
-"Plugin 'tpope/vim-unimpaired'
-"Plugin 'tpope/vim-rsi'
-"Plugin 'dahu/vim-lotr'
-"Plugin 'tommcdo/vim-exchange'
-"Plugin 'kurkale6ka/vim-pairs'
-"Plugin 'EinfachToll/DidYouMean'
-"" Colourschemes
-"Plugin 'flazz/vim-colorschemes'
-"" No more plugins after here
-"call vundle#end()
-"filetype plugin indent on
 " }}}
 
 " General Options {{{
@@ -177,6 +161,12 @@ set wmh=0 " allow minimum height windows (status line only)
 nnoremap <C-L> :bn<CR>
 nnoremap <C-H> :bp<CR>
 
+" switch to previous buffer
+nnoremap <Leader><Tab> :b#<CR>
+
+" delete buffer
+nnoremap <silent> <Leader>X :bd!<CR>
+
 " Quick edit of _vimrc
 nnoremap <leader>v :edit $MYVIMRC<CR>
 " Quick source of _vimrc
@@ -188,7 +178,7 @@ cmap ww w %<cr>:so %<cr>
 cnoremap <expr> %%  getcmdtype()==':' ? expand('%:h').'/' : '%%'
 
 " Clear search highlighting shortcut:
-nnoremap <leader>c :nohlsearch<CR>
+nnoremap <leader>c :noh<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
 "nnoremap <cr> :noh<cr>
 
@@ -240,10 +230,27 @@ nnoremap Q :qa<cr>
 " of the screen
 nmap <C-T> Mz<CR>
 
-" CtrlP mappings, I'm not even sure what this plugin is for...
-let g:ctrlp_map = '<C-P>'
+" Make Y yank to EOL, more vimmy.
+nnoremap Y y$
 
-" vim-bookmarks settings
+" Column Scroll-Binding
+" This will vertically split the current buffer into two which will stay
+" scroll-locked together. Allows you to see twice as much code at once
+" (disables the wrap setting and expands folds to work better)
+nnoremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb nowrap nofen<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+" Global substitution skeleton, just add the search/replace pattern
+nnoremap gs :%s//g<Left><Left>
+
+" visually select all
+nnoremap vaa ggVG
+"}}}
+
+" CtrlP mappings, I'm not even sure what this plugin is for... {{{
+let g:ctrlp_map = '<C-P>'
+"}}}
+
+" vim-bookmarks settings {{{
 let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
 highlight SignColumn guibg=Black
@@ -271,14 +278,6 @@ nnoremap <leader>os :OpenSession<cr>
 nnoremap <leader>ss :SaveSession<cr>
 " }}}
 
-" Column Scroll-Binding
-" This will vertically split the current buffer into two which will stay
-" scroll-locked together. Allows you to see twice as much code at once
-" (disables the wrap setting and expands folds to work better)
-nnoremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb nowrap nofen<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
-
-" go substitute because the default map for sleeping is silly
-nnoremap gs :%s//g<Left><Left>
 
 " highlight 81st column if reached
 " Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
