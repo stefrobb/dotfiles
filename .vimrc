@@ -21,6 +21,7 @@ Plug 'dahu/vim-lotr'
 Plug 'tommcdo/vim-exchange'
 Plug 'kurkale6ka/vim-pairs'
 Plug 'EinfachToll/DidYouMean'
+Plug 'mhinz/vim-Startify'
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -76,6 +77,7 @@ set hidden			" allow switching buffers without saving changes first
 set nocompatible	" don't be vi
 set autoindent		" what is says
 set smartindent		" more indent-y stuff
+set nofoldenable	" all folds open initially
 set clipboard=unnamed " don't force me to use "* to yank and paste the system clipboard
 set tabstop=4
 set shiftwidth=4
@@ -277,3 +279,25 @@ nnoremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb nowrap nofen<CR
 
 " go substitute because the default map for sleeping is silly
 nnoremap gs :%s//g<Left><Left>
+
+" highlight 81st column if reached
+" Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
+function! MarkMargin (on)
+  highlight colorcolumn ctermbg=DarkRed
+  highlight colorcolumn guibg=DarkRed
+  if exists('b:MarkMargin')
+    try
+      call matchdelete(b:MarkMargin)
+    catch /./
+    endtry
+    unlet b:MarkMargin
+  endif
+  if a:on
+    let b:MarkMargin = matchadd('ColorColumn', '\%81v', 100)
+  endif
+endfunction
+
+augroup MarkMargin
+  autocmd!
+  autocmd BufEnter * :call MarkMargin(1)
+augroup END
