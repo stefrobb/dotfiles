@@ -1,6 +1,6 @@
 " Switched to vim-plug from Vundle.  Very simple install and set up so far.
 " vim-plug {{{
-call plug#begin('~/vimfiles/plugged')
+call plug#begin()
 Plug 'Lokaltog/vim-easymotion'
 Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
@@ -114,7 +114,7 @@ if has("win32")
 	if has("gui_running")
 	  " GUI is running or is about to start.
 	  " Set the size of the gvim window.
-	  set lines=54 columns=120
+	  set lines=54 columns=180
 	else
 	  " This is console Vim.
 	  if exists("+lines")
@@ -268,3 +268,12 @@ let g:session_autoload='no'
 nnoremap <leader>os :OpenSession<cr>
 nnoremap <leader>ss :SaveSession<cr>
 " }}}
+
+" Column Scroll-Binding
+" This will vertically split the current buffer into two which will stay
+" scroll-locked together. Allows you to see twice as much code at once
+" (disables the wrap setting and expands folds to work better)
+nnoremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb nowrap nofen<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+" go substitute because the default map for sleeping is silly
+nnoremap gs :%s//g<Left><Left>
