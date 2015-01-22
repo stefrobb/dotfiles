@@ -178,9 +178,16 @@ cmap ww w %<cr>:so %<cr>
 cnoremap <expr> %%  getcmdtype()==':' ? expand('%:h').'/' : '%%'
 
 " Clear search highlighting shortcut:
-nnoremap <leader>c :noh<CR>
+"nnoremap <leader>c :noh<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
-"nnoremap <cr> :noh<cr>
+nnoremap <cr> :noh<cr>
+
+nnoremap n nzz	" center next search result
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " Map - (minus) to open the current folder in netrw (or NERDTree)
 noremap - :NERDTree<cr>
@@ -281,6 +288,7 @@ nnoremap <leader>ss :SaveSession<cr>
 
 " highlight 81st column if reached
 " Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
+" Doesn't work well in vsplits though
 function! MarkMargin (on)
   highlight colorcolumn ctermbg=DarkRed
   highlight colorcolumn guibg=DarkRed
