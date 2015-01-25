@@ -211,10 +211,15 @@ noremap <buffer> <silent> $ g$
 noremap <buffer> <silent> ^ g^
 noremap <buffer> <silent> _ g_
 
+" C-Up/Down moves entire line up/down.
+nnoremap <C-Up> <ESC>:m .-2<CR>
+nnoremap <C-Down> <ESC>:m .+1<CR>
+
 " Pagedown with space
-nnoremap <Space> <PageDown>
+nmap <Space> <C-f>
 " Pageup with shift space?  Why not!
-nnoremap <S-Space> <PageUp>
+" (doesn't work in terminal vim, dunno why)
+nmap <S-Space> <C-b>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
