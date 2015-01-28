@@ -73,7 +73,7 @@ set laststatus=2	" always have a status line
 set number			" line numbers on by default
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
-if has("win32")
+if s:running_windows
 	colorscheme vibrantink
 else
 	colorscheme vibrantink
@@ -81,7 +81,7 @@ endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
 " Set font, depending on OS
-if has("win32")
+if s:running_windows
 	set guifont=Sauce_Code_Powerline:h9:cANSI
 "else
 	"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
@@ -97,7 +97,7 @@ syntax enable " enable syntax highlighting
 syntax on
 
 " Set window size, Windows only
-if has("win32")
+if s:running_windows
 	if has("gui_running")
 	  " GUI is running or is about to start.
 	  " Set the size of the gvim window.
