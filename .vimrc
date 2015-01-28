@@ -49,6 +49,7 @@ Plug 'tommcdo/vim-exchange'
 Plug 'kurkale6ka/vim-pairs'
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-Startify'
+Plug 'jeetsukumaran/vim-indentwise'
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
