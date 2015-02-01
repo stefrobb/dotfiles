@@ -39,7 +39,7 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'    " Window auto-sizing
 Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
 "Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-session'
+"Plug 'xolox/vim-session'    " Using startify session now
 Plug 'miyakogi/conoline.vim'    " Highlight the cursor line
 Plug 'sjl/gundo.vim'
 "Plug 'tpope/vim-unimpaired'
@@ -157,14 +157,11 @@ set wmh=0 " allow minimum height windows (status line only)
 
 " Remappings of some of the above keys, these ones allow us to move between
 " buffers rather than windows since I started using the buftabline plugin
-" thingy.
 nnoremap <C-L> :bn<CR>
 nnoremap <C-H> :bp<CR>
-
-" switch to previous buffer
+" Quick switch to previous buffer
 nnoremap <Leader><Tab> :b#<CR>
-
-" delete buffer
+" Delete buffer
 nnoremap <silent> <Leader>X :bd!<CR>
 
 " Quick edit of _vimrc
@@ -182,7 +179,8 @@ nnoremap <leader>c :noh<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
 "nnoremap <cr> :noh<cr>
 
-nnoremap n nzz	" center next search result
+" Centre search results
+nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
@@ -211,7 +209,7 @@ noremap <buffer> <silent> $ g$
 noremap <buffer> <silent> ^ g^
 noremap <buffer> <silent> _ g_
 
-" C-Up/Down moves entire line up/down.
+" C-Up/Down *moves* entire line up/down.
 nnoremap <C-Up> <ESC>:m .-2<CR>
 nnoremap <C-Down> <ESC>:m .+1<CR>
 
@@ -258,10 +256,6 @@ nnoremap gs :%s//g<Left><Left>
 nnoremap vae ggVG
 "}}}
 
-" CtrlP mappings, I'm not even sure what this plugin is for... {{{
-let g:ctrlp_map = '<C-P>'
-"}}}
-
 " vim-bookmarks settings {{{
 let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
@@ -283,15 +277,15 @@ let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 " }}}
 
-" vim-session configuation {{{
-let g:session_autosave='no'
-let g:session_autoload='no'
-nnoremap <leader>os :OpenSession<cr>
-nnoremap <leader>ss :SaveSession<cr>
-" }}}
+"" vim-session configuation {{{
+"let g:session_autosave='no'
+"let g:session_autoload='no'
+"nnoremap <leader>os :OpenSession<cr>
+"nnoremap <leader>ss :SaveSession<cr>
+"" }}}
 
 
-" highlight 81st column if reached
+" highlight 81st column if reached {{{
 " Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
 " Doesn't work well in vsplits though
 function! MarkMargin (on)
@@ -313,3 +307,4 @@ augroup MarkMargin
   autocmd!
   autocmd BufEnter * :call MarkMargin(1)
 augroup END
+" }}}
