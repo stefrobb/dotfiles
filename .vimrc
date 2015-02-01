@@ -28,28 +28,27 @@ endif
 
 " vim-plug plugins {{{
 call plug#begin()
-Plug 'Lokaltog/vim-easymotion'
-Plug 'justinmk/vim-sneak'
+Plug 'Lokaltog/vim-easymotion'    " Extra motions, mapped to \
+"Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
-Plug 'wting/rust.vim'
+"Plug 'wting/rust.vim'
 "Plug 'kana/vim-textobj-user'
 "Plug 'kana/vim-textobj-entire'  " replace with a mapping: vae
-Plug 'kien/ctrlp.vim'
-Plug 'roman/golden-ratio'
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-Plug 'miyakogi/conoline.vim'
+"Plug 'kien/ctrlp.vim'
+Plug 'roman/golden-ratio'    " Window auto-sizing
+Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
+"Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-session'
+Plug 'miyakogi/conoline.vim'    " Highlight the cursor line
 Plug 'sjl/gundo.vim'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-rsi'
-Plug 'dahu/vim-lotr'
-Plug 'tommcdo/vim-exchange'
-Plug 'kurkale6ka/vim-pairs'
-Plug 'EinfachToll/DidYouMean'
+"Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-rsi'    " Readline mappings in insert/command mode
+"Plug 'tommcdo/vim-exchange'
+Plug 'kurkale6ka/vim-pairs'    " Punctuation text objects
+"Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-Startify'
-Plug 'jeetsukumaran/vim-indentwise'
+Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -179,9 +178,9 @@ cmap ww w %<cr>:so %<cr>
 cnoremap <expr> %%  getcmdtype()==':' ? expand('%:h').'/' : '%%'
 
 " Clear search highlighting shortcut:
-"nnoremap <leader>c :noh<CR>
+nnoremap <leader>c :noh<CR>
 " A little cleverer (but I think it'll probably cause a headache later):
-nnoremap <cr> :noh<cr>
+"nnoremap <cr> :noh<cr>
 
 nnoremap n nzz	" center next search result
 nnoremap N Nzz
