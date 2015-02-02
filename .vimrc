@@ -215,9 +215,8 @@ nnoremap <C-Down> <ESC>:m .+1<CR>
 
 " Pagedown with space
 nmap <Space> <C-f>
-" Pageup with shift space?  Why not!
-" (doesn't work in terminal vim, dunno why)
-nmap <S-Space> <C-b>
+" Backspace as page up? Yups.
+nnoremap <bs> <C-b>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
