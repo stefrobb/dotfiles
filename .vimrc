@@ -29,24 +29,15 @@ endif
 " vim-plug plugins {{{
 call plug#begin()
 Plug 'Lokaltog/vim-easymotion'    " Extra motions, mapped to \
-"Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
-"Plug 'wting/rust.vim'
-"Plug 'kana/vim-textobj-user'
-"Plug 'kana/vim-textobj-entire'  " replace with a mapping: vae
-"Plug 'kien/ctrlp.vim'
 Plug 'roman/golden-ratio'    " Window auto-sizing
 Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
-"Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-session'    " Using startify session now
 Plug 'miyakogi/conoline.vim'    " Highlight the cursor line
 Plug 'sjl/gundo.vim'
-"Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-rsi'    " Readline mappings in insert/command mode
-"Plug 'tommcdo/vim-exchange'
 Plug 'kurkale6ka/vim-pairs'    " Punctuation text objects
-"Plug 'EinfachToll/DidYouMean'
+Plug 'wellle/targets.vim'    " More text object targets
 Plug 'mhinz/vim-Startify'
 Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
 " Colourschemes
