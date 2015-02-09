@@ -6,6 +6,7 @@ filetype plugin indent on
 
 " Windows/Linux differences
 let s:running_windows = has("win16") || has("win32") || has("win64")
+"let s:running_cygwin = has("win32unix")
 let g:myvimdir ="~/.vim" " default to .vim
 if s:running_windows
   let g:myvimdir ="~/vimfiles" " Windoze uses vimfiles
@@ -40,6 +41,7 @@ Plug 'kurkale6ka/vim-pairs'    " Punctuation text objects
 Plug 'wellle/targets.vim'    " More text object targets
 Plug 'mhinz/vim-Startify'
 Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
+Plug 'kien/ctrlp.vim'    " Fuzzy file finder
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -82,6 +84,12 @@ set guioptions-=T	" no gui toolbar
 set guioptions-=m	" no gui menubar
 set linebreak 		" word-wrap on
 set scrolloff=5		" scroll when we get close to the top/bottom
+
+" Tab completion, don't match binaries
+set wildmode=longest,list
+set wildignore+=*.a,*.o
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=*~,*.swp,*.tmp
 
 syntax enable " enable syntax highlighting
 syntax on
@@ -147,9 +155,11 @@ nnoremap <C-M> <C-W>_
 set wmh=0 " allow minimum height windows (status line only)
 
 " Remappings of some of the above keys, these ones allow us to move between
-" buffers rather than windows since I started using the buftabline plugin
+" buffers rather than windows
 nnoremap <C-L> :bn<CR>
+nnoremap <Right> :bn<CR>
 nnoremap <C-H> :bp<CR>
+nnoremap <Left> :bp<CR>
 " Quick switch to previous buffer
 nnoremap <Leader><Tab> :b#<CR>
 " Delete buffer
@@ -189,8 +199,13 @@ noremap - :NERDTree<cr>
 " expanded properly. Obv. you have to complete the rest of the s///g command yourself.
 vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 
-" Map jk to <esc> only in insert mode
+" Map jk/kj to <esc> only in insert mode
 inoremap jk <esc>
+inoremap kj <esc>
+
+" Change cursor position in insert mode
+inoremap <C-h> <left>
+inoremap <C-l> <right>
 
 " Make it so that using long, wrapped lines will behave like normal lines
 noremap <buffer> <silent> k gk
@@ -262,6 +277,7 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
+" Display the buffers in the tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
