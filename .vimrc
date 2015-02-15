@@ -18,11 +18,11 @@ if !filereadable(expand(g:myvimdir . "/autoload/plug.vim"))
   echo "Installing Vim-Plug and plugins. Restart after it's done."
   silent call mkdir(expand(g:myvimdir . "/autoload", 1), 'p')
   if s:running_windows
-    silent! execute "!curl -kfLo ".expand($USERPROFILE . "\\vimfiles\\autoload\\plug.vim", 1)
-          \ ." https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    silent! execute "!curl -kfLo " . expand($USERPROFILE . "\\vimfiles\\autoload\\plug.vim", 1)
+          \ . " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   else
-    silent! execute "!curl -fLo ".expand(g:myvimdir . "/autoload/plug.vim", 1)
-          \ ." https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    silent! execute "!curl -fLo " . expand(g:myvimdir . "/autoload/plug.vim", 1)
+          \ . " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   endif
   autocmd VimEnter * PlugInstall
 endif 
