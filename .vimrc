@@ -35,11 +35,11 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'    " Window auto-sizing
 Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
 Plug 'miyakogi/conoline.vim'    " Highlight the cursor line
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'    " Multiple undos for many mistakes
 Plug 'tpope/vim-rsi'    " Readline mappings in insert/command mode
 Plug 'kurkale6ka/vim-pairs'    " Punctuation text objects
 Plug 'wellle/targets.vim'    " More text object targets
-Plug 'mhinz/vim-Startify'
+Plug 'mhinz/vim-Startify'    " Startup page and session management
 Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
 Plug 'kien/ctrlp.vim'    " Fuzzy file finder
 " Colourschemes
@@ -203,6 +203,10 @@ vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 inoremap jk <esc>
 inoremap kj <esc>
 
+" Use H and L are beginning/end of line movements
+nnoremap H ^
+nnoremap L g_
+
 " Change cursor position in insert mode
 inoremap <C-h> <left>
 inoremap <C-l> <right>
@@ -220,9 +224,9 @@ nnoremap <C-Up> <ESC>:m .-2<CR>
 nnoremap <C-Down> <ESC>:m .+1<CR>
 
 " Pagedown with space
-nmap <Space> <C-f>
+nmap <Space> <C-d>zz
 " Backspace as page up? Yups.
-nnoremap <bs> <C-b>
+nnoremap <bs> <C-u>zz
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
@@ -259,6 +263,8 @@ nnoremap gs :%s//g<Left><Left>
 
 " visually select all
 nnoremap vae ggVG
+" vv selects the text of the current line
+nnoremap vv ^vg_
 "}}}
 
 " vim-bookmarks settings {{{
