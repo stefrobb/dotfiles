@@ -8,8 +8,14 @@ filetype plugin indent on
 let s:running_windows = has("win16") || has("win32") || has("win64")
 "let s:running_cygwin = has("win32unix")
 let g:myvimdir ="~/.vim" " default to .vim
+set backupdir="~/.vim/tmp"
+" There's something seriously wrong here, neither of these set
+" lines actually change the value, in Windows or Cygwin.
+set undodir="~/.vim/tmp"
 if s:running_windows
   let g:myvimdir ="~/vimfiles" " Windoze uses vimfiles
+  set backupdir=
+  set undodir=
 endif
 
 " Install Vim-Plug if it isn't installed
@@ -42,6 +48,7 @@ Plug 'wellle/targets.vim'    " More text object targets
 Plug 'mhinz/vim-Startify'    " Startup page and session management
 Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
 Plug 'kien/ctrlp.vim'    " Fuzzy file finder
+Plug 'yegappan/mru'    " MRU list (:MRU)
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -50,6 +57,8 @@ call plug#end()
 " General Options {{{
 set nobackup		" no backup files (doesn't seem to work sometimes)
 set noswapfile		" no swap files (don't even see the point of these)
+set nowritebackup
+
 set hidden			" allow switching buffers without saving changes first
 set nocompatible	" don't be vi
 set autoindent		" what is says
@@ -320,3 +329,5 @@ augroup MarkMargin
   autocmd BufEnter * :call MarkMargin(1)
 augroup END
 " }}}
+
+set nobackup
