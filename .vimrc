@@ -8,9 +8,9 @@ filetype plugin indent on
 let s:running_windows = has("win16") || has("win32") || has("win64")
 "let s:running_cygwin = has("win32unix")
 let g:myvimdir ="~/.vim" " default to .vim
-set backupdir="~/.vim/tmp"
 " There's something seriously wrong here, neither of these set
 " lines actually change the value, in Windows or Cygwin.
+set backupdir="~/.vim/tmp"
 set undodir="~/.vim/tmp"
 if s:running_windows
   let g:myvimdir ="~/vimfiles" " Windoze uses vimfiles
@@ -36,7 +36,7 @@ endif
 " vim-plug plugins {{{
 call plug#begin()
 Plug 'Lokaltog/vim-easymotion'    " Extra motions, mapped to \
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }  " Lazy load
 Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'    " Window auto-sizing
 Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
@@ -130,7 +130,7 @@ augroup END
 " }}}
 
 " Includes {{{
-source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/vimrc_example.vim
 " Remap cut, copy and paste to Windows keys.
 "source $VIMRUNTIME/mswin.vim  " No thanks
 " c-v pastes to the *right* of the cursor pos, remain in normal mode
@@ -150,7 +150,8 @@ map / <Plug>(easymotion-sn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
-" Map window switching keys
+
+" Window behaviour/manipulation mappings:
 " These ones maximise the window after switching:
 "nnoremap <C-H> <C-W>h<C-W>_
 "nnoremap <C-J> <C-W>j<C-W>_
@@ -163,8 +164,9 @@ nnoremap <C-K> <C-W>k
 nnoremap <C-M> <C-W>_
 set wmh=0 " allow minimum height windows (status line only)
 
-" Remappings of some of the above keys, these ones allow us to move between
-" buffers rather than windows
+
+" Buffer behaviour/manipulation mappings:
+" Move left/right between buffers
 nnoremap <C-L> :bn<CR>
 nnoremap <Right> :bn<CR>
 nnoremap <C-H> :bp<CR>
@@ -173,6 +175,7 @@ nnoremap <Left> :bp<CR>
 nnoremap <Leader><Tab> :b#<CR>
 " Delete buffer
 nnoremap <silent> <Leader>X :bd!<CR>
+
 
 " Quick edit of _vimrc
 nnoremap <leader>v :edit $MYVIMRC<CR>
@@ -233,9 +236,9 @@ nnoremap <C-Up> <ESC>:m .-2<CR>
 nnoremap <C-Down> <ESC>:m .+1<CR>
 
 " Pagedown with space
-nmap <Space> <C-d>zz
+nmap <Space> <C-f>
 " Backspace as page up? Yups.
-nnoremap <bs> <C-u>zz
+nnoremap <bs> <C-b>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
@@ -329,5 +332,3 @@ augroup MarkMargin
   autocmd BufEnter * :call MarkMargin(1)
 augroup END
 " }}}
-
-set nobackup
