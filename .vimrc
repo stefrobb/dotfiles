@@ -81,6 +81,7 @@ if s:running_windows
 	colorscheme adrian
 else
 	colorscheme wombat256mod
+	colo molokai 
 endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
