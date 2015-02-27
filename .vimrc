@@ -35,20 +35,22 @@ endif
 
 " vim-plug plugins {{{
 call plug#begin()
-Plug 'Lokaltog/vim-easymotion'    " Extra motions, mapped to \
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }  " Lazy load
+Plug 'Lokaltog/vim-easymotion'                         " Extra motions, mapped to \
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Lazy load
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'    " Window auto-sizing
-Plug 'MattesGroeger/vim-bookmarks'    " Per-line bookmarks
-Plug 'miyakogi/conoline.vim'    " Highlight the cursor line
-Plug 'sjl/gundo.vim'    " Multiple undos for many mistakes
-Plug 'tpope/vim-rsi'    " Readline mappings in insert/command mode
-Plug 'kurkale6ka/vim-pairs'    " Punctuation text objects
-Plug 'wellle/targets.vim'    " More text object targets
-Plug 'mhinz/vim-Startify'    " Startup page and session management
-Plug 'jeetsukumaran/vim-indentwise'  " Move by indent-level: [+ and [-
-Plug 'kien/ctrlp.vim'    " Fuzzy file finder
-Plug 'yegappan/mru'    " MRU list (:MRU)
+Plug 'roman/golden-ratio'                              " Window auto-sizing
+Plug 'MattesGroeger/vim-bookmarks'                     " Per-line bookmarks
+Plug 'miyakogi/conoline.vim'                           " Highlight the cursor line
+Plug 'sjl/gundo.vim'                                   " Multiple undos for many mistakes
+Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
+Plug 'kurkale6ka/vim-pairs'                            " Punctuation text objects
+Plug 'wellle/targets.vim'                              " More text object targets
+Plug 'mhinz/vim-Startify'                              " Startup page and session management
+Plug 'jeetsukumaran/vim-indentwise'                    " Move by indent-level: [+ and [-
+Plug 'kien/ctrlp.vim'                                  " Fuzzy file finder (not really diggin' this)
+Plug 'yegappan/mru'                                    " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'                              " Use f/t for repeat in-line searching, free your ;
+Plug 'junegunn/vim-easy-align'                         " Align things!  Like all these comments!
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -71,13 +73,14 @@ set backspace=indent,eol,start
 behave mswin		" allow mouse
 set ruler			" show cursor position
 set laststatus=2	" always have a status line
-set number			" line numbers on by default
+set number			" line numbers
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if s:running_windows
-	colorscheme vibrantink
+	colorscheme BlackSea
+	colorscheme adrian
 else
-	colorscheme vibrantink
+	colorscheme wombat256mod
 endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
@@ -124,7 +127,8 @@ endif
 " Filetype autocmd stuff {{{
 augroup filetype_vim
     autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
+	au FileType vim setlocal fo-=c fo-=r fo-=o
+ 	autocmd FileType vim setlocal foldmethod=marker
 	autocmd FileType ruby compiler ruby
 augroup END
 " }}}
@@ -140,6 +144,10 @@ augroup END
 " Mappings {{{
 let mapleader=','
 
+" Save
+inoremap <C-s> <C-O>:update<cr>
+nnoremap <C-s> :update<cr>
+
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 set listchars=tab:¸\ ,eol:¬
@@ -150,6 +158,15 @@ map / <Plug>(easymotion-sn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
+" vim-easy-align mappings:
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+"nmap ga <Plug>(EasyAlign)  " Don't know how useful this one would be to me
+" Rule for aligning quote marks
+let g:easy_align_delimiters = {
+\  '"': { 'pattern': '"',  'delimiter_align': 'l', 'ignore_groups': ['!Comment']  }
+\ }
 
 " Window behaviour/manipulation mappings:
 " These ones maximise the window after switching:
@@ -163,6 +180,9 @@ nnoremap <C-K> <C-W>k
 " <C-M> maximises current window
 nnoremap <C-M> <C-W>_
 set wmh=0 " allow minimum height windows (status line only)
+" Switch windows using Tab
+nnoremap <tab> <c-w>w
+nnoremap <S-tab> <c-w>W
 
 
 " Buffer behaviour/manipulation mappings:
@@ -200,8 +220,8 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" Map - (minus) to open the current folder in netrw (or NERDTree)
-noremap - :NERDTree<cr>
+" Map F10 to open the current folder in netrw (or NERDTree)
+noremap <F10> :NERDTree<cr>
 
 " Map c-j/k to scroll the window around the cursor
 "map <c-j> j<c-e>
@@ -332,3 +352,37 @@ augroup MarkMargin
   autocmd BufEnter * :call MarkMargin(1)
 augroup END
 " }}}
+
+" Reopen files on the same line as you last edited
+" (note, edited, not necessarily the same as the
+" cursor line.)
+function! s:JumpToLastKnownCursorPosition()
+    if line("'\"") <= 1 | return | endif
+    if line("'\"") > line("$") | return | endif
+    " Ignore git commit messages and git rebase scripts
+    if expand("%") =~# '\(^\|/\)\.git/' | return | endif
+    execute "normal! g`\"" |
+endfunction
+autocmd BufReadPost * call s:JumpToLastKnownCursorPosition()
+
+
+" ----------------------------------------------------------------------------
+" <F8> | Color scheme selector
+" ----------------------------------------------------------------------------
+function! s:rotate_colors()
+  if !exists('s:colors_list')
+    let s:colors_list =
+    \ sort(map(
+    \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
+    \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
+  endif
+  if !exists('s:colors_index')
+    let s:colors_index = index(s:colors_list, g:colors_name)
+  endif
+  let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
+  let name = s:colors_list[s:colors_index]
+  execute 'colorscheme' name
+  redraw
+  echo name
+endfunction
+nnoremap <F8> :call <SID>rotate_colors()<cr>
