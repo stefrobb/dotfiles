@@ -79,8 +79,10 @@ set t_Co=256		" moar colours
 if s:running_windows
 	colorscheme BlackSea
 	colorscheme adrian
+	colo gruvbox
 else
 	colorscheme wombat256mod
+	colo gotham
 endif
 set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
@@ -98,7 +100,7 @@ set linebreak 		" word-wrap on
 set scrolloff=5		" scroll when we get close to the top/bottom
 
 " Tab completion, don't match binaries
-set wildmode=longest,list
+set wildmode=longest:list,full
 set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*~,*.swp,*.tmp
@@ -364,7 +366,6 @@ function! s:JumpToLastKnownCursorPosition()
     execute "normal! g`\"" |
 endfunction
 autocmd BufReadPost * call s:JumpToLastKnownCursorPosition()
-
 
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
