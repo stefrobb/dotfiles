@@ -38,19 +38,22 @@ call plug#begin()
 Plug 'Lokaltog/vim-easymotion'                         " Extra motions, mapped to \
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Lazy load
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'                              " Window auto-sizing
-Plug 'MattesGroeger/vim-bookmarks'                     " Per-line bookmarks
-Plug 'miyakogi/conoline.vim'                           " Highlight the cursor line
-Plug 'sjl/gundo.vim'                                   " Multiple undos for many mistakes
-Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
-Plug 'kurkale6ka/vim-pairs'                            " Punctuation text objects
-Plug 'wellle/targets.vim'                              " More text object targets
-Plug 'mhinz/vim-Startify'                              " Startup page and session management
-Plug 'jeetsukumaran/vim-indentwise'                    " Move by indent-level: [+ and [-
-Plug 'kien/ctrlp.vim'                                  " Fuzzy file finder (not really diggin' this)
-Plug 'yegappan/mru'                                    " MRU list (:MRU)
-Plug 'rhysd/clever-f.vim'                              " Use f/t for repeat in-line searching, free your ;
-Plug 'junegunn/vim-easy-align'                         " Align things!  Like all these comments!
+Plug 'roman/golden-ratio'    " Window auto-sizing
+Plug 'miyakogi/conoline.vim' " Highlight the cursor line
+Plug 'kurkale6ka/vim-pairs'  " Punctuation text objects
+Plug 'wellle/targets.vim'    " More text object targets
+Plug 'mhinz/vim-Startify'    " Startup page and session management
+Plug 'yegappan/mru'          " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'    " Use f/t for repeat in-line searching, free your ;
+Plug 'godlygeek/tabular'     " Well? Does it? Sort-of.
+
+" Disabled plugins
+"Plug 'MattesGroeger/vim-bookmarks'                     " Per-line bookmarks
+"Plug 'sjl/gundo.vim'                                   " Multiple undos for many mistakes
+"Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
+"Plug 'jeetsukumaran/vim-indentwise'                    " Move by indent-level: [+ and [-
+"Plug 'kien/ctrlp.vim'                                  " Fuzzy file finder (not really diggin' this)
+
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
@@ -77,9 +80,13 @@ set number			" line numbers
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if s:running_windows
-	colorscheme BlackSea
-	colorscheme adrian
-	colo gruvbox
+	"colorscheme BlackSea
+	"colorscheme adrian
+	"colo gruvbox
+	"colo solarized
+	"colo spectro
+	"colo torte
+	colo wintersday
 else
 	colorscheme wombat256mod
 	colo gotham
@@ -113,7 +120,7 @@ if s:running_windows
 	if has("gui_running")
 	  " GUI is running or is about to start.
 	  " Set the size of the gvim window.
-	  set lines=54 columns=180
+	  set lines=54 columns=160
 	else
 	  " This is console Vim.
 	  if exists("+lines")
@@ -159,16 +166,6 @@ map \ <Plug>(easymotion-prefix)
 map / <Plug>(easymotion-sn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
-
-" vim-easy-align mappings:
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-"nmap ga <Plug>(EasyAlign)  " Don't know how useful this one would be to me
-" Rule for aligning quote marks
-let g:easy_align_delimiters = {
-\  '"': { 'pattern': '"',  'delimiter_align': 'l', 'ignore_groups': ['!Comment']  }
-\ }
 
 " Window behaviour/manipulation mappings:
 " These ones maximise the window after switching:
