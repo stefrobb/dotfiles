@@ -41,13 +41,15 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'    " Window auto-sizing
 Plug 'miyakogi/conoline.vim' " Highlight the cursor line
 Plug 'kurkale6ka/vim-pairs'  " Punctuation text objects
-Plug 'wellle/targets.vim'    " More text object targets
+		                     " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
 Plug 'mhinz/vim-Startify'    " Startup page and session management
 Plug 'yegappan/mru'          " MRU list (:MRU)
 Plug 'rhysd/clever-f.vim'    " Use f/t for repeat in-line searching, free your ;
-Plug 'godlygeek/tabular'     " Well? Does it? Sort-of.
+Plug 'godlygeek/tabular'     " Well? Does it? Sort-of. (:Tab/{regex})
+Plug 'tpope/vim-commentary'  " For commenting, oddly enough
 
 " Disabled plugins
+"Plug 'wellle/targets.vim'    							" More text object targets
 "Plug 'MattesGroeger/vim-bookmarks'                     " Per-line bookmarks
 "Plug 'sjl/gundo.vim'                                   " Multiple undos for many mistakes
 "Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
