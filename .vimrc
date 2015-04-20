@@ -46,7 +46,7 @@ Plug 'mhinz/vim-Startify'    " Startup page and session management
 Plug 'yegappan/mru'          " MRU list (:MRU)
 Plug 'rhysd/clever-f.vim'    " Use f/t for repeat in-line searching, free your ;
 Plug 'godlygeek/tabular'     " Well? Does it? Sort-of. (:Tab/{regex})
-Plug 'tpope/vim-commentary'  " For commenting, oddly enough
+Plug 'tpope/vim-commentary'  " For commenting, oddly enough (gcc per-line, gc<motion>)
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
