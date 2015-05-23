@@ -47,6 +47,9 @@ Plug 'yegappan/mru'          " MRU list (:MRU)
 Plug 'rhysd/clever-f.vim'    " Use f/t for repeat in-line searching, free your ;
 Plug 'godlygeek/tabular'     " Well? Does it? Sort-of. (:Tab/{regex})
 Plug 'tpope/vim-commentary'  " For commenting, oddly enough (gcc per-line, gc<motion>)
+autocmd FileType autohotkey set commentstring=;\ %s
+Plug 'zefei/vim-colortuner'
+Plug 'terryma/vim-multiple-cursors'
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
@@ -88,7 +91,9 @@ if s:running_windows
 	"colo solarized
 	"colo spectro
 	"colo torte
-	colo wintersday
+"	colo wintersday
+	colo primary
+	set background=dark
 else
 	colorscheme wombat256mod
 	colo gotham
@@ -101,12 +106,13 @@ if s:running_windows
 "else
 	"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 endif
-set autochdir		" change cwd to that of file/buffer being edited
-set vb t_vb=		" no bell
-set guioptions-=T	" no gui toolbar
-set guioptions-=m	" no gui menubar
-set linebreak 		" word-wrap on
-set scrolloff=5		" scroll when we get close to the top/bottom
+set autochdir           " change cwd to that of file/buffer being edited
+set vb t_vb=            " no bell
+set guioptions-=T       " no gui toolbar
+set guioptions-=m       " no gui menubar
+set linebreak           " word-wrap on
+set scrolloff=5         " scroll when we get close to the top/bottom
+set selection=inclusive " required for multiple cursors plugin
 
 " Tab completion, don't match binaries
 set wildmode=longest:list,full
