@@ -38,18 +38,19 @@ call plug#begin()
 Plug 'Lokaltog/vim-easymotion'                         " Extra motions, mapped to \
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Lazy load
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'    " Window auto-sizing
-Plug 'miyakogi/conoline.vim' " Highlight the cursor line
-Plug 'kurkale6ka/vim-pairs'  " Punctuation text objects
-		                     " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
-Plug 'mhinz/vim-Startify'    " Startup page and session management
-Plug 'yegappan/mru'          " MRU list (:MRU)
-Plug 'rhysd/clever-f.vim'    " Use f/t for repeat in-line searching, free your ;
-Plug 'godlygeek/tabular'     " Well? Does it? Sort-of. (:Tab/{regex})
-Plug 'tpope/vim-commentary'  " For commenting, oddly enough (gcc per-line, gc<motion>)
+Plug 'roman/golden-ratio'                           " Window auto-sizing
+Plug 'miyakogi/conoline.vim'                        " Highlight the cursor line
+Plug 'kurkale6ka/vim-pairs'                         " Punctuation text objects
+		                                            " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
+Plug 'mhinz/vim-Startify'                           " Startup page and session management
+Plug 'yegappan/mru'                                 " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'                           " Use f/t for repeat in-line searching, free your ;
+Plug 'godlygeek/tabular'                            " Well? Does it? Sort-of. (:Tab/{regex})
+Plug 'tpope/vim-commentary'                         " For commenting, oddly enough (gcc per-line, gc<motion>)
 autocmd FileType autohotkey set commentstring=;\ %s
-Plug 'zefei/vim-colortuner'
+Plug 'zefei/vim-colortuner'                         " Use F8
 Plug 'terryma/vim-multiple-cursors'
+Plug 'kien/rainbow_parentheses.vim'                 " Multi-coloured brackets!
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
@@ -73,6 +74,7 @@ set hidden			" allow switching buffers without saving changes first
 set nocompatible	" don't be vi
 set autoindent		" what is says
 set smartindent		" more indent-y stuff
+set nostartofline	" don't reset column on page up/down
 set nofoldenable	" all folds open initially
 set clipboard=unnamed " don't force me to use "* to yank and paste the system clipboard
 set tabstop=4
@@ -251,12 +253,12 @@ inoremap <C-h> <left>
 inoremap <C-l> <right>
 
 " Make it so that using long, wrapped lines will behave like normal lines
-noremap <buffer> <silent> k gk
-noremap <buffer> <silent> j gj
-noremap <buffer> <silent> 0 g0
-noremap <buffer> <silent> $ g$
-noremap <buffer> <silent> ^ g^
-noremap <buffer> <silent> _ g_
+noremap <silent> k gk
+noremap <silent> j gj
+noremap <silent> 0 g^	" Swap 0 and ^
+noremap <silent> $ g$
+noremap <silent> ^ g0	" Swap 0 and ^
+noremap <silent> _ g_
 
 " C-Up/Down *moves* entire line up/down.
 nnoremap <C-Up> <ESC>:m .-2<CR>
