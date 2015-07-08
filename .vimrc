@@ -274,7 +274,8 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 " Insert new line above without going into insert mode
-nnoremap <S-Enter> O<ESC>
+"(uses mark o to return to the previous cursor column)
+nnoremap <S-Enter> moO<Esc>`o
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
 nnoremap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
