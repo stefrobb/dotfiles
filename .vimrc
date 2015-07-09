@@ -273,9 +273,18 @@ nnoremap <bs> <C-b>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" Insert new line above without going into insert mode
-"(uses mark o to return to the previous cursor column)
-nnoremap <S-Enter> moO<Esc>`o
+" -- Inserting new blank lines --
+" We can use vim-unimpaired's [<space> and ]<space> to 
+" insert blank lines above and below without moving
+" cursor postion
+" There's too much other guff in the unimpaired plugin that
+" I don't need, so I just stole the mappings for inserting
+" lines (these also take a count)
+nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
+nnoremap <silent> ]<space>  :<c-u>put =repeat([''],v:count)<bar>'[-1<cr>
+" " Insert new line above without going into insert mode
+" "(uses mark o to return to the previous cursor column)
+" nnoremap <S-Enter> moO<Esc>`o
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
 nnoremap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
