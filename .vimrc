@@ -51,6 +51,7 @@ autocmd FileType autohotkey set commentstring=;\ %s
 Plug 'zefei/vim-colortuner'                         " Use F8
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/rainbow_parentheses.vim'                 " Multi-coloured brackets!
+Plug 'coderifous/textobj-word-column.vim'           " Column select text objects (ic/iC/ac/aC)
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
@@ -93,8 +94,9 @@ if s:running_windows
 	"colo solarized
 	"colo spectro
 	"colo torte
-"	colo wintersday
-	colo primary
+	colo wintersday
+	" colo primary
+	" colo gotham
 	set background=dark
 else
 	colorscheme wombat256mod
@@ -247,6 +249,9 @@ inoremap kj <esc>
 " Use H and L are beginning/end of line movements
 nnoremap H ^
 nnoremap L g_
+nnoremap K }
+" J and K jump paragraphs
+nnoremap J {
 
 " Change cursor position in insert mode
 inoremap <C-h> <left>
