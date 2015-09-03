@@ -35,23 +35,26 @@ endif
 
 " vim-plug plugins {{{
 call plug#begin()
-Plug 'Lokaltog/vim-easymotion'                         " Extra motions, mapped to \
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Lazy load
+Plug 'Lokaltog/vim-easymotion'                          " Extra motions, mapped to \
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }  " Lazy load
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'                           " Window auto-sizing
-Plug 'miyakogi/conoline.vim'                        " Highlight the cursor line
-Plug 'kurkale6ka/vim-pairs'                         " Punctuation text objects
-		                                            " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
-Plug 'mhinz/vim-Startify'                           " Startup page and session management
-Plug 'yegappan/mru'                                 " MRU list (:MRU)
-Plug 'rhysd/clever-f.vim'                           " Use f/t for repeat in-line searching, free your ;
-Plug 'godlygeek/tabular'                            " Well? Does it? Sort-of. (:Tab/{regex})
-Plug 'tpope/vim-commentary'                         " For commenting, oddly enough (gcc per-line, gc<motion>)
+Plug 'roman/golden-ratio'                               " Window auto-sizing
+Plug 'miyakogi/conoline.vim'                            " Highlight the cursor line
+Plug 'kurkale6ka/vim-pairs'                             " Punctuation text objects
+		                                                " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
+Plug 'mhinz/vim-Startify'                               " Startup page and session management
+Plug 'yegappan/mru'                                     " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'                               " Use f/t for repeat in-line searching, free your ;
+Plug 'godlygeek/tabular'                                " Well? Does it? Sort-of. (:Tab/{regex})
+Plug 'tpope/vim-commentary'                             " For commenting, oddly enough (gcc per-line, gc<motion>)
 autocmd FileType autohotkey set commentstring=;\ %s
-Plug 'zefei/vim-colortuner'                         " Use F8
+Plug 'zefei/vim-colortuner'                             " Use F8
 Plug 'terryma/vim-multiple-cursors'
-Plug 'kien/rainbow_parentheses.vim'                 " Multi-coloured brackets!
-Plug 'coderifous/textobj-word-column.vim'           " Column select text objects (ic/iC/ac/aC)
+Plug 'kien/rainbow_parentheses.vim'                     " Multi-coloured brackets!
+Plug 'coderifous/textobj-word-column.vim'               " Column select text objects (ic/iC/ac/aC)
+Plug 'huleiak47/vim-AHKcomplete'                        " AHK auto complete, no?
+autocmd FileType autohotkey setl omnifunc=ahkcomplete#Complete
+set completeopt+=preview
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
@@ -165,13 +168,18 @@ augroup END
 " Mappings {{{
 let mapleader=','
 
+" Let's also use ; as :
+nnoremap ; :
+
 " Save
 inoremap <C-s> <C-O>:update<cr>
 nnoremap <C-s> :update<cr>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
-set listchars=tab:¸\ ,eol:¬
+" Whitespace in these lines is for testing porpoises.       
+	" set listchars=tab:>~,eol:¬,nbsp:_,trail:@    
+	exec "set listchars=tab:\uBB\uBB,eol:¬,nbsp:~,trail:\uB7"    
 
 " Easymotion mappings:
 map \ <Plug>(easymotion-prefix)
@@ -352,6 +360,7 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 "nnoremap <leader>ss :SaveSession<cr>
 "" }}}
 
+let g:startify_session_persistence = 1
 
 " highlight 81st column if reached {{{
 " Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
