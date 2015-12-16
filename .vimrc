@@ -35,26 +35,36 @@ endif
 
 " vim-plug plugins {{{
 call plug#begin()
-Plug 'Lokaltog/vim-easymotion'                          " Extra motions, mapped to \
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }  " Lazy load
+Plug 'Lokaltog/vim-easymotion'                                 " Extra motions, mapped to \
+Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'                               " Window auto-sizing
-Plug 'miyakogi/conoline.vim'                            " Highlight the cursor line
-Plug 'kurkale6ka/vim-pairs'                             " Punctuation text objects
-		                                                " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
-Plug 'mhinz/vim-Startify'                               " Startup page and session management
-Plug 'yegappan/mru'                                     " MRU list (:MRU)
-Plug 'rhysd/clever-f.vim'                               " Use f/t for repeat in-line searching, free your ;
-Plug 'godlygeek/tabular'                                " Well? Does it? Sort-of. (:Tab/{regex})
-Plug 'tpope/vim-commentary'                             " For commenting, oddly enough (gcc per-line, gc<motion>)
+Plug 'roman/golden-ratio'                                      " Window auto-sizing
+Plug 'miyakogi/conoline.vim'                                   " Highlight the cursor line
+"let g:conoline_color_normal_dark = 'ctermbg=darkgrey ctermfg=white' 
+let g:conoline_use_colorscheme_default_normal=1
+let g:conoline_use_colorscheme_default_insert=1
+Plug 'kurkale6ka/vim-pairs'                                    " Punctuation text objects
+		                                                       " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
+Plug 'mhinz/vim-Startify'                                      " Startup page and session management
+Plug 'yegappan/mru'                                            " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'                                      " Use f/t for repeat in-line searching, free your ;
+Plug 'godlygeek/tabular'                                       " Well? Does it? Sort-of. (:Tab/{regex})
+Plug 'tpope/vim-commentary'                                    " For commenting, oddly enough (gcc per-line, gc<motion>)
 autocmd FileType autohotkey set commentstring=;\ %s
-Plug 'zefei/vim-colortuner'                             " Use F8
+Plug 'zefei/vim-colortuner'                                    " Use F8
 Plug 'terryma/vim-multiple-cursors'
-Plug 'kien/rainbow_parentheses.vim'                     " Multi-coloured brackets!
-Plug 'coderifous/textobj-word-column.vim'               " Column select text objects (ic/iC/ac/aC)
-Plug 'huleiak47/vim-AHKcomplete'                        " AHK auto complete, no?
+Plug 'kien/rainbow_parentheses.vim'                            " Multi-coloured brackets!
+Plug 'coderifous/textobj-word-column.vim'                      " Column select text objects (ic/iC/ac/aC)
+Plug 'huleiak47/vim-AHKcomplete'                               " AHK auto complete, no?
 autocmd FileType autohotkey setl omnifunc=ahkcomplete#Complete
 set completeopt+=preview
+Plug 'reedes/vim-pencil'                                       " Tweaks for writers, dunno about this one, good GitHub page
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+Plug 'wellle/visual-split.vim'
 
 " Disabled plugins
 "Plug 'wellle/targets.vim'    							" More text object targets
@@ -91,15 +101,10 @@ set number			" line numbers
 set t_Co=256		" moar colours
 " Select colour scheme depending on OS
 if s:running_windows
-	"colorscheme BlackSea
+	":colorscheme BlackSea
 	"colorscheme adrian
-	"colo gruvbox
-	"colo solarized
+	colorscheme wintersday
 	"colo spectro
-	"colo torte
-	colo wintersday
-	" colo primary
-	" colo gotham
 	set background=dark
 else
 	colorscheme wombat256mod
@@ -118,14 +123,22 @@ set vb t_vb=            " no bell
 set guioptions-=T       " no gui toolbar
 set guioptions-=m       " no gui menubar
 set linebreak           " word-wrap on
+set wrap                " actually wrap
 set scrolloff=5         " scroll when we get close to the top/bottom
 set selection=inclusive " required for multiple cursors plugin
+set encoding=utf-8
 
 " Tab completion, don't match binaries
 set wildmode=longest:list,full
 set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=*~,*.swp,*.tmp
+set wildmenu	" show autocompletes
+
+set lazyredraw	" redraw only when we need to.
+
+" highlight last inserted text
+nnoremap gV `[v`]
 
 syntax enable " enable syntax highlighting
 syntax on
@@ -239,8 +252,9 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" Map F10 to open the current folder in netrw (or NERDTree)
-noremap <F10> :NERDTree<cr>
+" Map \ to open the current folder in netrw (or NERDTree)
+nnoremap \ :NERDTreeToggle<cr>
+let NERDTreeShowBookmarks=1  " Show the bookmarks by default
 
 " Map c-j/k to scroll the window around the cursor
 "map <c-j> j<c-e>
@@ -253,13 +267,16 @@ vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 " Map jk/kj to <esc> only in insert mode
 inoremap jk <esc>
 inoremap kj <esc>
+inoremap jj <esc>
 
 " Use H and L are beginning/end of line movements
 nnoremap H ^
 nnoremap L g_
-nnoremap K }
 " J and K jump paragraphs
+nnoremap K }
 nnoremap J {
+" So { no joins lines.  Don't know about this one...
+nnoremap { J
 
 " Change cursor position in insert mode
 inoremap <C-h> <left>
