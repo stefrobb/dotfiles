@@ -1,3 +1,5 @@
+" .vimrc -- get over it.
+
 " use Vim settings over Vi settings
 set nocompatible
 " enables filetype detection, ftplugins, and indent files 
@@ -6,9 +8,9 @@ filetype plugin indent on
 
 " Windows/Linux differences
 let s:running_windows = has("win16") || has("win32") || has("win64")
-"let s:running_cygwin = has("win32unix")
+let s:running_cygwin = has("win32unix")
 let g:myvimdir ="~/.vim" " default to .vim
-" There's something seriously wrong here, neither of these set
+" There's something weirdly wrong here, neither of these set
 " lines actually change the value, in Windows or Cygwin.
 set backupdir="~/.vim/tmp"
 set undodir="~/.vim/tmp"
@@ -17,6 +19,7 @@ if s:running_windows
   set backupdir=
   set undodir=
 endif
+
 
 " Install Vim-Plug if it isn't installed
 " (requires curl and git)
@@ -33,43 +36,69 @@ if !filereadable(expand(g:myvimdir . "/autoload/plug.vim"))
   autocmd VimEnter * PlugInstall
 endif 
 
-" vim-plug plugins {{{
 call plug#begin()
-Plug 'Lokaltog/vim-easymotion'                                 " Extra motions, mapped to \
-Plug 'scrooloose/nerdtree'
+Plug 'Lokaltog/vim-easymotion'                                  " Extra motions, mapped to \, /, t, n and N
+" motion match
+map \ <Plug>(easymotion-prefix)
+" n character match
+map / <Plug>(easymotion-sn)
+" 2 character match
+map t <Plug>(easymotion-s2)
+" n and N use Easymotion matches
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+Plug 'scrooloose/nerdtree'										" NERDTree, 'nuff said
+" Map - to open the current folder in netrw (or NERDTree)
+nnoremap - :NERDTreeToggle<cr>
+let NERDTreeShowBookmarks=1  " Show the bookmarks by default
 Plug 'bling/vim-airline'
-Plug 'roman/golden-ratio'                                      " Window auto-sizing
-Plug 'miyakogi/conoline.vim'                                   " Highlight the cursor line
-"let g:conoline_color_normal_dark = 'ctermbg=darkgrey ctermfg=white' 
+" Fed up trying to sort out fonts, let's just do away with the arrows.
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+" Display the buffers in the tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+Plug 'roman/golden-ratio'                                       " Window auto-sizing
+Plug 'miyakogi/conoline.vim'                                    " Highlight the cursor line
+" let g:conoline_color_normal_dark = 'ctermbg=darkgrey ctermfg=white'
 let g:conoline_use_colorscheme_default_normal=1
 let g:conoline_use_colorscheme_default_insert=1
-Plug 'kurkale6ka/vim-pairs'                                    " Punctuation text objects
-		                                                       " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
-Plug 'mhinz/vim-Startify'                                      " Startup page and session management
-Plug 'yegappan/mru'                                            " MRU list (:MRU)
-Plug 'rhysd/clever-f.vim'                                      " Use f/t for repeat in-line searching, free your ;
-Plug 'godlygeek/tabular'                                       " Well? Does it? Sort-of. (:Tab/{regex})
-Plug 'tpope/vim-commentary'                                    " For commenting, oddly enough (gcc per-line, gc<motion>)
+Plug 'kurkale6ka/vim-pairs'                                     " Punctuation text objects
+		                                                        " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
+Plug 'mhinz/vim-Startify'                                       " Startup page and session management
+let g:startify_session_persistence = 1
+Plug 'yegappan/mru'                                             " MRU list (:MRU)
+Plug 'rhysd/clever-f.vim'                                       " Use f/t for repeat in-line searching, free your ;
+Plug 'godlygeek/tabular'                                        " Well? Does it? Sort-of. (:Tab/{regex})
+Plug 'tpope/vim-commentary'                                     " For commenting, oddly enough (gcc per-line, gc<motion>)
 autocmd FileType autohotkey set commentstring=;\ %s
-Plug 'zefei/vim-colortuner'                                    " Use F8
-Plug 'terryma/vim-multiple-cursors'
-Plug 'kien/rainbow_parentheses.vim'                            " Multi-coloured brackets!
-Plug 'coderifous/textobj-word-column.vim'                      " Column select text objects (ic/iC/ac/aC)
-Plug 'huleiak47/vim-AHKcomplete'                               " AHK auto complete, no?
+Plug 'zefei/vim-colortuner'                                     " Use F8
+Plug 'kien/rainbow_parentheses.vim'                             " Multi-coloured brackets!
+Plug 'coderifous/textobj-word-column.vim'                       " Column select text objects (ic/iC/ac/aC)
+Plug 'huleiak47/vim-AHKcomplete'                                " AHK auto complete, no?
 autocmd FileType autohotkey setl omnifunc=ahkcomplete#Complete
 set completeopt+=preview
-Plug 'reedes/vim-pencil'                                       " Tweaks for writers, dunno about this one, good GitHub page
+Plug 'reedes/vim-pencil'                                        " Tweaks for writers, dunno about this one, good GitHub page
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
 augroup END
-Plug 'wellle/visual-split.vim'
+Plug 'MattesGroeger/vim-bookmarks'                     			" Per-line bookmarks, mm, mn, mp, etc.
+let g:bookmark_sign='> '
+let g:bookmark_annotation_sign = '>#'
+"highlight SignColumn guibg=Black
+"highlight SignColumn ctermbg=0
+Plug 'sjl/gundo.vim'                                   			" Multiple undos for many mistakes
+nnoremap <leader>gu :GundoToggle<cr>
 
-" Disabled plugins
+" Disabled, but possibly useful, plugins
+"Plug 'wellle/visual-split.vim'                                  " Does conflict with golden-ratio
 "Plug 'wellle/targets.vim'    							" More text object targets
-"Plug 'MattesGroeger/vim-bookmarks'                     " Per-line bookmarks
-"Plug 'sjl/gundo.vim'                                   " Multiple undos for many mistakes
 "Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
 "Plug 'jeetsukumaran/vim-indentwise'                    " Move by indent-level: [+ and [-
 "Plug 'kien/ctrlp.vim'                                  " Fuzzy file finder (not really diggin' this)
@@ -77,9 +106,7 @@ Plug 'wellle/visual-split.vim'
 " Colourschemes
 Plug 'flazz/vim-colorschemes'
 call plug#end()
-" }}}
 
-" General Options {{{
 set nobackup		" no backup files (doesn't seem to work sometimes)
 set noswapfile		" no swap files (don't even see the point of these)
 set nowritebackup
@@ -114,7 +141,8 @@ set ignorecase		" um, ignore case
 set smartcase		" override ignorecase if the search pattern contains upper case
 " Set font, depending on OS
 if s:running_windows
-	set guifont=Sauce_Code_Powerline:h9:cANSI
+	"set guifont=Sauce_Code_Powerline:h9:cANSI
+	set guifont=Fantasque_Sans_Mono:h12:cANSI
 "else
 	"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 endif
@@ -159,32 +187,22 @@ if s:running_windows
 	  endif
 	endif
 endif
-"}}}
 
-" Filetype autocmd stuff {{{
+" Some filetype stuff, randomly placed here.
 augroup filetype_vim
     autocmd!
 	au FileType vim setlocal fo-=c fo-=r fo-=o
  	autocmd FileType vim setlocal foldmethod=marker
 	autocmd FileType ruby compiler ruby
 augroup END
-" }}}
 
-" Includes {{{
-"source $VIMRUNTIME/vimrc_example.vim
-" Remap cut, copy and paste to Windows keys.
-"source $VIMRUNTIME/mswin.vim  " No thanks
-" c-v pastes to the *right* of the cursor pos, remain in normal mode
-"map <c-v> a<c-v><esc>
-"}}}
-
-" Mappings {{{
+" Use the comma (,) as our leader
 let mapleader=','
 
 " Let's also use ; as :
 nnoremap ; :
 
-" Save
+" Save using Ctrl-S, very Windows-y
 inoremap <C-s> <C-O>:update<cr>
 nnoremap <C-s> :update<cr>
 
@@ -194,11 +212,6 @@ nmap <leader>l :set list!<CR>
 	" set listchars=tab:>~,eol:¬,nbsp:_,trail:@    
 	exec "set listchars=tab:\uBB\uBB,eol:¬,nbsp:~,trail:\uB7"    
 
-" Easymotion mappings:
-map \ <Plug>(easymotion-prefix)
-map / <Plug>(easymotion-sn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
 
 " Window behaviour/manipulation mappings:
 " These ones maximise the window after switching:
@@ -252,17 +265,16 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" Map \ to open the current folder in netrw (or NERDTree)
-nnoremap \ :NERDTreeToggle<cr>
-let NERDTreeShowBookmarks=1  " Show the bookmarks by default
 
 " Map c-j/k to scroll the window around the cursor
 "map <c-j> j<c-e>
 "map <c-k> k<c-y>
 
+
 " Fancy search and replace set up: works in visual mode with selected text,
 " expanded properly. Obv. you have to complete the rest of the s///g command yourself.
 vnoremap <Leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
+
 
 " Map jk/kj to <esc> only in insert mode
 inoremap jk <esc>
@@ -273,9 +285,9 @@ inoremap jj <esc>
 nnoremap H ^
 nnoremap L g_
 " J and K jump paragraphs
-nnoremap K }
-nnoremap J {
-" So { no joins lines.  Don't know about this one...
+nnoremap K {
+nnoremap J }
+" So { now joins lines.  Not sure about this one...
 nnoremap { J
 
 " Change cursor position in insert mode
@@ -306,7 +318,7 @@ nnoremap <C-y> 3<C-y>
 " -- Inserting new blank lines --
 " We can use vim-unimpaired's [<space> and ]<space> to 
 " insert blank lines above and below without moving
-" cursor postion
+" cursor postion or entering Insert mode
 " There's too much other guff in the unimpaired plugin that
 " I don't need, so I just stole the mappings for inserting
 " lines (these also take a count)
@@ -346,40 +358,9 @@ nnoremap gs :%s//g<Left><Left>
 nnoremap vae ggVG
 " vv selects the text of the current line
 nnoremap vv ^vg_
-"}}}
 
-" vim-bookmarks settings {{{
-let g:bookmark_sign='> '
-let g:bookmark_annotation_sign = '>#'
-highlight SignColumn guibg=Black
-highlight SignColumn ctermbg=0
-" gundo mappings
-nnoremap <leader>gu :GundoToggle<cr>
-"}}}
 
-" vim-airline configuration {{{
-" Fed up trying to sort out fonts, let's just do away with the arrows.
-let g:airline_powerline_fonts = 0
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-" Display the buffers in the tabline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-" }}}
-
-"" vim-session configuation {{{
-"let g:session_autosave='no'
-"let g:session_autoload='no'
-"nnoremap <leader>os :OpenSession<cr>
-"nnoremap <leader>ss :SaveSession<cr>
-"" }}}
-
-let g:startify_session_persistence = 1
-
-" highlight 81st column if reached {{{
+" highlight 81st column if reached 
 " Example line Example line Example line Example line Example line Example li>>>E<<<ple line 
 " Doesn't work well in vsplits though
 function! MarkMargin (on)
@@ -401,7 +382,7 @@ augroup MarkMargin
   autocmd!
   autocmd BufEnter * :call MarkMargin(1)
 augroup END
-" }}}
+
 
 " Reopen files on the same line as you last edited
 " (note, edited, not necessarily the same as the
@@ -414,6 +395,7 @@ function! s:JumpToLastKnownCursorPosition()
     execute "normal! g`\"" |
 endfunction
 autocmd BufReadPost * call s:JumpToLastKnownCursorPosition()
+
 
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
