@@ -51,6 +51,7 @@ Plug 'scrooloose/nerdtree'										" NERDTree, 'nuff said
 " Map - to open the current folder in netrw (or NERDTree)
 nnoremap - :NERDTreeToggle<cr>
 let NERDTreeShowBookmarks=1  " Show the bookmarks by default
+Plug 'ctrlpvim/ctrlp.vim'    " Ctrl-P, for fun!
 Plug 'bling/vim-airline'
 " Fed up trying to sort out fonts, let's just do away with the arrows.
 let g:airline_powerline_fonts = 0
@@ -64,9 +65,11 @@ let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 Plug 'roman/golden-ratio'                                       " Window auto-sizing
 Plug 'miyakogi/conoline.vim'                                    " Highlight the cursor line
-" let g:conoline_color_normal_dark = 'ctermbg=darkgrey ctermfg=white'
-let g:conoline_use_colorscheme_default_normal=1
-let g:conoline_use_colorscheme_default_insert=1
+"let g:conoline_color_normal_dark = 'ctermbg=darkgrey ctermfg=white'
+"let g:conoline_use_colorscheme_default_normal=1
+"let g:conoline_use_colorscheme_default_insert=1
+let g:conoline_color_normal_dark = 'guibg=#333333 guifg=#ffffcc'
+let g:conoline_color_insert_dark = 'guibg=black guifg=white'
 Plug 'kurkale6ka/vim-pairs'                                     " Punctuation text objects
 		                                                        " ` ' ! $ % ^ & * _ - + = : ; @ ~ # | \ , . ? /
 Plug 'mhinz/vim-Startify'                                       " Startup page and session management
@@ -82,12 +85,6 @@ Plug 'coderifous/textobj-word-column.vim'                       " Column select 
 Plug 'huleiak47/vim-AHKcomplete'                                " AHK auto complete, no?
 autocmd FileType autohotkey setl omnifunc=ahkcomplete#Complete
 set completeopt+=preview
-Plug 'reedes/vim-pencil'                                        " Tweaks for writers, dunno about this one, good GitHub page
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
 Plug 'MattesGroeger/vim-bookmarks'                     			" Per-line bookmarks, mm, mn, mp, etc.
 let g:bookmark_sign='> '
 let g:bookmark_annotation_sign = '>#'
@@ -95,9 +92,17 @@ let g:bookmark_annotation_sign = '>#'
 "highlight SignColumn ctermbg=0
 Plug 'sjl/gundo.vim'                                   			" Multiple undos for many mistakes
 nnoremap <leader>gu :GundoToggle<cr>
+Plug 'kana/vim-operator-user' 									" Needed for below
+Plug 'haya14busa/vim-operator-flashy'							" Flashes (briefly) the yanked selection
 
 " Disabled, but possibly useful, plugins
 "Plug 'wellle/visual-split.vim'                                  " Does conflict with golden-ratio
+" Plug 'reedes/vim-pencil'                                        " Tweaks for writers, dunno about this one, good GitHub page
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd call pencil#init()
+"   autocmd FileType text         call pencil#init()
+" augroup END
 "Plug 'wellle/targets.vim'    							" More text object targets
 "Plug 'tpope/vim-rsi'                                   " Readline mappings in insert/command mode
 "Plug 'jeetsukumaran/vim-indentwise'                    " Move by indent-level: [+ and [-
@@ -153,7 +158,7 @@ set guioptions-=m       " no gui menubar
 set linebreak           " word-wrap on
 set wrap                " actually wrap
 set scrolloff=5         " scroll when we get close to the top/bottom
-set selection=inclusive " required for multiple cursors plugin
+"set selection=inclusive " required for multiple cursors plugin
 set encoding=utf-8
 
 " Tab completion, don't match binaries
@@ -342,8 +347,10 @@ nnoremap Q :qa<cr>
 " of the screen
 nmap <C-T> Mz<CR>
 
-" Make Y yank to EOL, more vimmy.
-nnoremap Y y$
+" Make Y yank to EOL, more vimmy. Also use operator-flashy plugin
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
+" nnoremap Y y$
 
 " Column Scroll-Binding
 " This will vertically split the current buffer into two which will stay
